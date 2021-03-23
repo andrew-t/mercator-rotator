@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>andrewt.net / mercator</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<img src="mercator-projection.jpg">
+	<glsl-canvas
+		id="globe"
+		downscaling="1"
+		shader="globe"
+	></glsl-canvas>
+	<glsl-canvas
+		id="rotated"
+		downscaling="1"
+		shader="rotated"
+	></glsl-canvas>
+	<script type="module" src="script.js"></script>
+</body>
+</html>

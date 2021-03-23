@@ -1,0 +1,14 @@
+body {
+	padding: 0;
+	margin: 0;
+}
+
+glsl-canvas, img {
+	display: inline-block;
+	width: 50vmin;
+	height: 50vmin;
+}
+
+#rotated {
+	height: 100vmin;
+}
