@@ -1,24 +1,28 @@
 export default `
 	const float PI = acos(0.0);
 	const float TAU = 2.0 * PI;
-	const float LAT_SCALE = 0.175; //0.25 / tan(PI * 85.0 / 180.0);
+	// in theory R is the radius of the globe, which by definition has circumference 1 here
+	const float R = 0.5 / TAU;
 
 	vec2 toMercator(vec3 p) {
 		p /= sqrt(dot(p, p));
 		return vec2(
-			fract((atan(p.z, p.x) / PI / 4.0) + 2.0),
-			LAT_SCALE * p.y / sqrt(dot(p.xz, p.xz)) + 0.5
+			fract((atan(p.z, p.x) * R) + 2.0),
+			R * 0.5 * log((1.0 + p.y) / (1.0 - p.y)) + 0.5
 		);
 	}
 
 	vec3 fromMercator(vec2 p) {
-		float longitude = PI * 4.0 * p.x;
+		float longitude = p.x / R;
+		float y = exp((p.y - 0.5) * 2.0 / R); 
 		vec3 v = vec3(
 			cos(longitude),
-			(p.y - 0.5) / LAT_SCALE,
+			(y - 1.0) / (y + 1.0),
 			sin(longitude)
 		);
-		return v / sqrt(dot(v, v));
+		v.xz *= sqrt(1.0 - v.y * v.y);
+		v /= sqrt(dot(v, v));
+		return v;
 	}
 
 	mat2 rotation2d(float angle) {
