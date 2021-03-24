@@ -59,7 +59,7 @@ glsl-canvas {
 	top: 40vh;
 	left: 0;
 	width: 100vw;
-	height: 60vh;
+	bottom: 0;
 }
 
 @media (min-aspect-ratio: 1/1) {
@@ -67,13 +67,14 @@ glsl-canvas {
 		top: 0;
 		left: 0;
 		width: 40vw;
-		height: 100vh;
+		height: unset;
+		bottom: 0;
 	}
 	#map {
 		top: 0;
 		left: 40vw;
 		width: 60vw;
-		height: 100vh;
+		bottom: 0;
 	}
 	span, a {
 		font-size: 2vw;
