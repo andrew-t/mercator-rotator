@@ -3,19 +3,18 @@
 <head>
 	<title>andrewt.net / mercator</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 </head>
 <body>
-	<img id="map" src="mercator-projection.jpg">
-	<glsl-canvas
-		id="globe"
-		downscaling="1"
-		shader="globe"
-	></glsl-canvas>
-	<glsl-canvas
-		id="rotated"
-		downscaling="1"
-		shader="rotated"
-	></glsl-canvas><img id="rotated-copy">
+	<div id="pole">
+		<span>Drag to set new North Pole:</span>
+		<glsl-canvas id="globe" downscaling="4" shader="globe"></glsl-canvas>
+	</div>
+	<div id="map">
+		<span>Drag horizontally to set prime meridian:</span>
+		<glsl-canvas id="rotated" downscaling="1" shader="rotated"></glsl-canvas>
+	</div>
+	<a id="wat" href="https://www.andrewt.net/blog/fun-with-the-mercator-projection">wat?</a>
 	<script type="module" src="script.js"></script>
 </body>
 </html>

@@ -1,15 +1,89 @@
 body {
 	padding: 0;
 	margin: 0;
+	user-select: none;
+	font-family: sans-serif;
+	overflow: hidden;
 }
 
-glsl-canvas, img {
-	display: inline-block;
-	width: 50vmin;
-	height: 50vmin;
+div {
+	position: absolute;
 }
 
-#rotated,
-#rotated-copy {
-	height: 75vmin;
+span, a {
+	font-size: 4vw;
+	color: white;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	text-shadow: 0.1em 0.1em 0.2em black;
+	padding: 0.5em;
+	text-decoration: none;
+}
+
+a:hover {
+	color: white;
+	text-decoration: underline;
+}
+
+glsl-canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+
+#globe::after {
+	content: '';
+	display: block;
+	position: absolute;
+	border: 5px solid white;
+	border-radius: 100%;
+	width: 2vmin;
+	height: 2vmin;
+	box-sizing: border-box;
+	top: calc(50% - 1vmin);
+	left: calc(50% - 1vmin);
+}
+
+#pole {
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 40vh;
+}
+
+#map {
+	top: 40vh;
+	left: 0;
+	width: 100vw;
+	height: 60vh;
+}
+
+@media (min-aspect-ratio: 1/1) {
+	#pole {
+		top: 0;
+		left: 0;
+		width: 40vw;
+		height: 100vh;
+	}
+	#map {
+		top: 0;
+		left: 40vw;
+		width: 60vw;
+		height: 100vh;
+	}
+	span, a {
+		font-size: 2vw;
+	}
+}
+
+#wat {
+	position: absolute;
+	left: unset;
+	top: unset;
+	right: 0;
+	bottom: 0;
 }

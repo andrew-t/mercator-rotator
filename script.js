@@ -1,22 +1,37 @@
 import "./shaders/globe.js";
 import "./shaders/rotated.js";
 import "./glsl-canvas/component.js";
+import drag from "./drag.js";
 
-const map = document.getElementById('map'),
-	globe = document.getElementById('globe'),
+const globe = document.getElementById('globe'),
 	rotated = document.getElementById('rotated'),
-	rotatedCopy = document.getElementById('rotated-copy');
+	latLong = document.getElementById('lat-long');
 
-globe.set({ texture: 'mercator-projection.jpg' });
-rotated.set({ texture: 'mercator-projection.jpg' });
-rotated.glslCanvas.on('render', () => {
-	rotatedCopy.src = rotated.canvas.toDataURL('image/png');
+let pole_lat = Math.PI * 0.5, pole_long = 0, spin = 0;
+
+drag(globe, (x, y) => {
+	pole_long -= x * 0.02;
+	pole_lat += y * 0.02;
+	if (pole_lat < -Math.PI * 0.5) pole_lat = -Math.PI * 0.5;
+	if (pole_lat > Math.PI * 0.5) pole_lat = Math.PI * 0.5;
+	globe.set({ pole_long, pole_lat, spin: 0 });
+	rotated.set({ pole_long, pole_lat, spin });
 });
 
-window.addEventListener('mousemove', e => {
+function deg(rad) {
+	return (rad * 180 / Math.PI).toFixed(5);
+}
+
+drag(rotated, (x) => {
+	spin -= x * 0.02;
+	globe.set({ pole_long, pole_lat, spin });
+	rotated.set({ pole_long, pole_lat, spin });
+});
+
+setTimeout(() => {
 	const vars = {
-		pole_long: (e.clientX / window.innerWidth - 0.5) * 2,
-		pole_lat: (e.clientY / window.innerHeight - 0.5) * 2
+		texture: 'mercator-projection.jpg',
+		pole_long, pole_lat, spin
 	};
 	globe.set(vars);
 	rotated.set(vars);

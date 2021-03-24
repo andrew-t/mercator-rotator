@@ -11,7 +11,7 @@ uniform float u_time;
 
 uniform float pole_long;
 uniform float pole_lat;
-uniform float angle;
+uniform float spin;
 
 uniform sampler2D texture;
 
@@ -23,7 +23,7 @@ void main()
 	vec2 uv = gl_FragCoord.xy / u_resolution.x;
 	uv.y -= (u_resolution.y / u_resolution.x - 1.0) / 2.0;
 	// uv += 0.5;
-	vec2 mercator = mercatorRotator(uv, pole_long + 0.5, pole_lat);
+	vec2 mercator = mercatorRotator(uv, pole_long + 0.5, pole_lat, spin);
 	// vec2 mercator = uv;
 	gl_FragColor = texture2D(texture, mercator);
 }

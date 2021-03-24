@@ -37,11 +37,13 @@ export default `
 	vec2 mercatorRotator(
 		vec2 m,
 		float pole_long,
-		float pole_lat
+		float pole_lat,
+		float spin
 	) {
 		vec3 xyz = fromMercator(m);
-		xyz.yz *= rotation2d(pole_lat * TAU);
-		xyz.xz *= rotation2d(pole_long * TAU);
+		xyz.xz *= rotation2d(spin);
+		xyz.yz *= rotation2d(pole_lat - PI);
+		xyz.xz *= rotation2d(pole_long);
 		return toMercator(xyz);
 	}
 `;
