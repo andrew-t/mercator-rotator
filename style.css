@@ -9,6 +9,7 @@ glsl-canvas, img {
 	height: 50vmin;
 }
 
-#rotated {
+#rotated,
+#rotated-copy {
 	height: 100vmin;
 }
