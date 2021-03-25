@@ -13,8 +13,6 @@ uniform float pole_long;
 uniform float pole_lat;
 uniform float spin;
 
-uniform sampler2D texture;
-
 ${utils}
 
 void main()
@@ -25,7 +23,7 @@ void main()
 	// uv += 0.5;
 	vec2 mercator = mercatorRotator(uv, pole_long + 0.5, pole_lat, spin + 1.72);
 	// vec2 mercator = uv;
-	gl_FragColor = texture2D(texture, mercator);
+	gl_FragColor = mercatorTex(mercator);
 }
 
 ` }, window.shaders);

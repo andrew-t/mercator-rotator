@@ -13,8 +13,6 @@ uniform float pole_long;
 uniform float pole_lat;
 uniform float spin;
 
-uniform sampler2D texture;
-
 const float RADIUS = 0.35;
 const float CAMERA_DISTANCE = 3.0;
 const float PERSPECTIVE = 3.0;
@@ -41,7 +39,7 @@ void main()
 	float light = dot(p, lightDirection);
 	vec2 mercator = toMercator(p);
 	mercator = mercatorRotator(mercator, pole_long + 0.5, pole_lat, spin);
-	vec4 col = texture2D(texture, mercator);
+	vec4 col = mercatorTex(mercator);
 	gl_FragColor = vec4(col.xyz * light, 1.0);
 }
 

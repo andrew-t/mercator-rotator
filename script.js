@@ -9,30 +9,53 @@ const globe = document.getElementById('globe'),
 
 let pole_lat = Math.PI * 0.5, pole_long = 0, spin = 0;
 
-drag(globe, (x, y) => {
-	pole_long -= x * 0.02;
-	pole_lat += y * 0.02;
-	if (pole_lat < -Math.PI * 0.5) pole_lat = -Math.PI * 0.5;
-	if (pole_lat > Math.PI * 0.5) pole_lat = Math.PI * 0.5;
-	globe.set({ pole_long, pole_lat, spin: 0 });
-	rotated.set({ pole_long, pole_lat, spin });
-});
-
 function deg(rad) {
 	return (rad * 180 / Math.PI).toFixed(5);
 }
 
-drag(rotated, (x) => {
-	spin -= x * 0.02;
-	globe.set({ pole_long, pole_lat, spin });
-	rotated.set({ pole_long, pole_lat, spin });
-});
+function delay(n) { return new Promise(r => setTimeout(r, n)); }
+function loadImage(url) {
+	return new Promise(resolve => {
+		const i2 = new Image();
+		i2.addEventListener('load', e => resolve(i2));
+		i2.src = url;
+	});
+}
 
-setTimeout(() => {
-	const vars = {
-		texture: 'mercator-projection.jpg',
-		pole_long, pole_lat, spin
-	};
+loadImage('mercator.jpg').then(async img => {
+	canvas.width = canvas.height = '256';
+	const ctx = canvas.getContext('2d');
+	for (let x = 0; x < 4; ++x)
+		for (let y = 0; y < 4; ++y) {
+			ctx.drawImage(img,
+				x * img.width / 4,
+				y * img.height / 4,
+				img.width / 4,
+				img.height / 4,
+				0, 0, 256, 256
+			);
+			await delay(10);
+			const n = `tex_${x}_${3 - y}`,
+				i2 = await loadImage(canvas.toDataURL('image/png'));
+			globe.glslCanvas.loadTexture(n, i2);
+			rotated.glslCanvas.loadTexture(n, i2);
+		}
+	const vars = { pole_long, pole_lat, spin };
 	globe.set(vars);
 	rotated.set(vars);
+
+	drag(globe, (x, y) => {
+		pole_long -= x * 0.02;
+		pole_lat += y * 0.02;
+		if (pole_lat < -Math.PI * 0.5) pole_lat = -Math.PI * 0.5;
+		if (pole_lat > Math.PI * 0.5) pole_lat = Math.PI * 0.5;
+		globe.set({ pole_long, pole_lat, spin: 0 });
+		rotated.set({ pole_long, pole_lat, spin });
+	});
+
+	drag(rotated, (x) => {
+		spin -= x * 0.02;
+		globe.set({ pole_long, pole_lat, spin });
+		rotated.set({ pole_long, pole_lat, spin });
+	});
 });

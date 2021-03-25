@@ -46,4 +46,46 @@ export default `
 		xyz.xz *= rotation2d(pole_long);
 		return toMercator(xyz);
 	}
+
+	uniform sampler2D tex_0_0;
+	uniform sampler2D tex_0_1;
+	uniform sampler2D tex_0_2;
+	uniform sampler2D tex_0_3;
+	uniform sampler2D tex_1_0;
+	uniform sampler2D tex_1_1;
+	uniform sampler2D tex_1_2;
+	uniform sampler2D tex_1_3;
+	uniform sampler2D tex_2_0;
+	uniform sampler2D tex_2_1;
+	uniform sampler2D tex_2_2;
+	uniform sampler2D tex_2_3;
+	uniform sampler2D tex_3_0;
+	uniform sampler2D tex_3_1;
+	uniform sampler2D tex_3_2;
+	uniform sampler2D tex_3_3;
+	vec4 mercatorTex(vec2 coords) {
+		coords *= 4.0;
+		if (coords.x < 1.0) {
+			if (coords.y < 1.0) return texture2D(tex_0_0, coords);
+			if (coords.y < 2.0) return texture2D(tex_0_1, coords - vec2(0.0, 1.0));
+			if (coords.y < 3.0) return texture2D(tex_0_2, coords - vec2(0.0, 2.0));
+			return texture2D(tex_0_3, coords - vec2(0.0, 3.0));
+		}
+		if (coords.x < 2.0) {
+			if (coords.y < 1.0) return texture2D(tex_1_0, coords - vec2(1.0, 0.0));
+			if (coords.y < 2.0) return texture2D(tex_1_1, coords - vec2(1.0, 1.0));
+			if (coords.y < 3.0) return texture2D(tex_1_2, coords - vec2(1.0, 2.0));
+			return texture2D(tex_1_3, coords - vec2(1.0, 3.0));
+		}
+		if (coords.x < 3.0) {
+			if (coords.y < 1.0) return texture2D(tex_2_0, coords - vec2(2.0, 0.0));
+			if (coords.y < 2.0) return texture2D(tex_2_1, coords - vec2(2.0, 1.0));
+			if (coords.y < 3.0) return texture2D(tex_2_2, coords - vec2(2.0, 2.0));
+			return texture2D(tex_2_3, coords - vec2(2.0, 3.0));
+		}
+		if (coords.y < 1.0) return texture2D(tex_3_0, coords - vec2(3.0, 0.0));
+		if (coords.y < 2.0) return texture2D(tex_3_1, coords - vec2(3.0, 1.0));
+		if (coords.y < 3.0) return texture2D(tex_3_2, coords - vec2(3.0, 2.0));
+		return texture2D(tex_3_3, coords - vec2(3.0, 3.0));
+	}
 `;

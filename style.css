@@ -88,3 +88,5 @@ glsl-canvas {
 	right: 0;
 	bottom: 0;
 }
+
+#canvas { display: none; }
