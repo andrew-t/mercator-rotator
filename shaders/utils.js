@@ -1,4 +1,8 @@
 export default `
+	uniform float pole_long;
+	uniform float pole_lat;
+	uniform float spin;
+
 	const float PI = acos(0.0);
 	const float TAU = 2.0 * PI;
 	// in theory R is the radius of the globe, which by definition has circumference 1 here

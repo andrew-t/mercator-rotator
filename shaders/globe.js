@@ -9,10 +9,6 @@ window.shaders = Object.assign({ globe: `
 uniform vec2 u_resolution;
 uniform float u_time;
 
-uniform float pole_long;
-uniform float pole_lat;
-uniform float spin;
-
 const float RADIUS = 0.35;
 const float CAMERA_DISTANCE = 3.0;
 const float PERSPECTIVE = 3.0;

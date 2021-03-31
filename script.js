@@ -7,7 +7,7 @@ const globe = document.getElementById('globe'),
 	rotated = document.getElementById('rotated'),
 	latLong = document.getElementById('lat-long');
 
-let pole_lat = Math.PI * 0.5, pole_long = 0, spin = 0;
+let pole_lat = Math.PI * 0.5, pole_long = 0, spin = 0, map_y = 0;
 
 function deg(rad) {
 	return (rad * 180 / Math.PI).toFixed(5);
@@ -50,12 +50,13 @@ loadImage('mercator.jpg').then(async img => {
 		if (pole_lat < -Math.PI * 0.5) pole_lat = -Math.PI * 0.5;
 		if (pole_lat > Math.PI * 0.5) pole_lat = Math.PI * 0.5;
 		globe.set({ pole_long, pole_lat, spin: 0 });
-		rotated.set({ pole_long, pole_lat, spin });
+		rotated.set({ pole_long, pole_lat, spin, map_y });
 	});
 
-	drag(rotated, (x) => {
+	drag(rotated, (x, y) => {
 		spin -= x * 0.02;
+		map_y += y * 0.005;
 		globe.set({ pole_long, pole_lat, spin });
-		rotated.set({ pole_long, pole_lat, spin });
+		rotated.set({ pole_long, pole_lat, spin, map_y });
 	});
 });
