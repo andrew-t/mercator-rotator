@@ -17,6 +17,8 @@ export default `
 	}
 
 	vec3 fromMercator(vec2 p) {
+		if (p.y < -1.85) return vec3(0.0, -1.0, 0.0);
+		if (p.y > 1.85) return vec3(0.0, 1.0, 0.0);
 		float longitude = p.x / R;
 		float y = exp((p.y - 0.5) * 2.0 / R); 
 		vec3 v = vec3(
